@@ -21,3 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 3 deterministic scoring & summary engine in `src/utils/assessmentAnalyzer.ts` (BMI, protein range, 4-pillar sub-scores, tailored Indonesian insights, `HOT`/`WARM`/`COLD` lead priority, and WA/IG DM summary formatters).
 - Phase 3 IG-first `ContactGate` component in `src/components/ContactGate.tsx` with locked teaser preview, `@instagram` normalization, optional WhatsApp validation, anti-bot honeypot, and UU PDP privacy note.
 - Phase 3 `'summary'` verification flow and honeypot-guarded submission wiring in `src/App.tsx` and updated `AnalysisResult` types in `src/types/assessment.ts`.
+- Phase 4 collapsible `AnswerRecap` accordion in `src/components/AnswerRecap.tsx` displaying all 12 submitted answers grouped by step with `"Ulangi Evaluasi"` action.
+- Phase 4 `SummaryView` results dashboard in `src/components/SummaryView.tsx` with circular score ring, 4 sub-score bars, BMI & protein cards, Coach Vera insights, and Dual CTA (WhatsApp + IG DM with non-blocking clipboard auto-copy and fallback preview box).
+- Phase 4 `App.tsx` wiring replacing the temporary summary card with `<SummaryView />` and smooth reset-to-intro flow.

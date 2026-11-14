@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, CheckCircle2, Clock, RotateCcw, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, Clock, RotateCcw, ShieldCheck, Sparkles } from 'lucide-react';
 import { ContactGate } from './components/ContactGate';
 import { FormStep } from './components/FormStep';
 import { Header } from './components/Header';
+import { SummaryView } from './components/SummaryView';
 import { APP_VERSION, COACH_NAME, INSTAGRAM_USERNAME, buildWhatsAppUrl } from './config/appConfig';
 import { ASSESSMENT_QUESTIONS, ASSESSMENT_STEPS } from './data/questions';
 import { EMPTY_ANSWERS, captureUtmParams, clearDraft, getUtmParams, loadDraft, saveDraft, submitToWebhook } from './services/storageService';
@@ -39,13 +40,14 @@ export default function App() {
     });
   };
 
-  const handleStartFresh = () => {
+  const resetTo = (target: ScreenState) => {
     clearDraft();
     setAnswers(EMPTY_ANSWERS);
     setStepIndex(0);
     setHasDraft(false);
     setAnalysis(null);
-    setScreen('form');
+    setScreen(target);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNext = () => {
@@ -56,6 +58,7 @@ export default function App() {
     } else {
       saveDraft(answers, stepIndex);
       setScreen('gate');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -83,6 +86,7 @@ export default function App() {
       clearDraft();
       setHasDraft(false);
       setScreen('summary');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setIsSubmitting(false);
     }
@@ -108,11 +112,11 @@ export default function App() {
               {hasDraft && (
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#059669]/20 bg-[#ECFDF5] px-4 py-3 text-xs text-[#065F46]">
                   <span className="font-medium">Lanjutkan pengisian sebelumnya (Langkah {stepIndex + 1} dari {ASSESSMENT_STEPS.length})</span>
-                  <button type="button" onClick={handleStartFresh} className="inline-flex items-center gap-1 font-semibold text-[#059669] underline underline-offset-2"><RotateCcw className="h-3.5 w-3.5" />Mulai Ulang</button>
+                  <button type="button" onClick={() => resetTo('form')} className="inline-flex items-center gap-1 font-semibold text-[#059669] underline underline-offset-2"><RotateCcw className="h-3.5 w-3.5" />Mulai Ulang</button>
                 </div>
               )}
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button type="button" onClick={hasDraft ? () => setScreen('form') : handleStartFresh} className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl bg-[#059669] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#047857] active:scale-[0.98] sm:w-auto">
+                <button type="button" onClick={hasDraft ? () => setScreen('form') : () => resetTo('form')} className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl bg-[#059669] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#047857] active:scale-[0.98] sm:w-auto">
                   <span>{hasDraft ? 'Lanjutkan Evaluasi' : 'Mulai Evaluasi Gratis'}</span><ArrowRight className="h-4 w-4 shrink-0" />
                 </button>
                 <a href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center justify-center rounded-2xl px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100">Atau tanya {COACH_NAME} dulu via WA</a>
@@ -138,24 +142,8 @@ export default function App() {
         {screen === 'gate' && (
           <ContactGate initialContact={contact} isSubmitting={isSubmitting} onSubmit={handleContactSubmit} onBack={() => setScreen('form')} />
         )}
-        {screen === 'summary' && analysis && (
-          <div className="mx-auto w-full max-w-2xl rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
-            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-4">
-              <div><p className="text-xs font-semibold text-[#059669]">Hasil Analisa {contact?.nickname}</p><h2 className="text-xl font-extrabold">Skor Gaya Hidup: <span className="tabular-nums text-[#059669]">{analysis.overallScore}/100</span></h2></div>
-              <span className="rounded-full bg-[#ECFDF5] px-3 py-1 text-xs font-bold text-[#059669]">Prioritas: {analysis.leadPriority}</span>
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl bg-[#FAFBF9] p-3"><p className="text-xs text-slate-500">BMI</p><p className="text-lg font-bold tabular-nums">{analysis.bmi}</p><p className="text-xs text-slate-600">{analysis.bmiCategory}</p></div>
-              <div className="rounded-2xl bg-[#FAFBF9] p-3"><p className="text-xs text-slate-500">Target Protein</p><p className="text-sm font-bold tabular-nums">{analysis.proteinRange}</p></div>
-              <div className="col-span-2 rounded-2xl bg-[#FAFBF9] p-3 sm:col-span-1"><p className="text-xs text-slate-500">Sub-Skor</p><p className="text-xs font-medium tabular-nums text-slate-700">Nutrisi {analysis.subScores.nutrition} · Energi {analysis.subScores.energy} · Tidur {analysis.subScores.recovery} · Gerak {analysis.subScores.activity}</p></div>
-            </div>
-            <ul className="mt-5 space-y-2.5 text-sm text-slate-700">
-              {analysis.insights.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2 rounded-2xl border border-slate-100 bg-[#FAFBF9] p-3"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#059669]" /><span>{item}</span></li>
-              ))}
-            </ul>
-            <button type="button" onClick={handleStartFresh} className="mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-2xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"><RotateCcw className="h-3.5 w-3.5" />Ulangi Evaluasi</button>
-          </div>
+        {screen === 'summary' && contact && analysis && (
+          <SummaryView contact={contact} answers={answers} analysis={analysis} onReset={() => resetTo('intro')} />
         )}
       </main>
       <footer className="border-t border-slate-200/70 py-4 text-center text-xs text-slate-400">© {new Date().getFullYear()} transformwithST · {COACH_NAME}</footer>

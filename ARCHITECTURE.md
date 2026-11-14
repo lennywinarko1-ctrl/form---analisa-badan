@@ -14,8 +14,8 @@
 
 | File Path | Responsibility | Status |
 | :--- | :--- | :--- |
-| `ARCHITECTURE.md` | System overview, file map, flow architecture, webhook specs | Phase 3 |
-| `CHANGELOG.md` | Versioned release history (Keep a Changelog) | Phase 3 |
+| `ARCHITECTURE.md` | System overview, file map, flow architecture, webhook specs | Phase 4 |
+| `CHANGELOG.md` | Versioned release history (Keep a Changelog) | Phase 4 |
 | `src/config/appConfig.ts` | Brand constants, Coach contacts, webhook & pixel configuration | Phase 1 |
 | `src/types/assessment.ts` | TypeScript interfaces for questions, answers, contacts, & analysis | Phase 3 |
 | `src/data/questions.ts` | 4-step / 12-question Indonesian express dataset | Phase 1 |
@@ -25,8 +25,9 @@
 | `src/utils/assessmentAnalyzer.ts` | BMI, protein range, 4-pillar sub-scores, insights, & WA/IG formatters | Phase 3 |
 | `src/components/FormStep.tsx` | 4-step interactive express form, numeric steppers, & inline validation | Phase 2 |
 | `src/components/ContactGate.tsx` | IG-first contact capture (`Nama`, `@instagram`, optional WA, honeypot) | Phase 3 |
-| `src/App.tsx` | Multi-screen flow controller (`intro`, `form`, `gate`, `summary`) | Phase 3 |
-| `src/components/SummaryView.tsx` | Personalized results + Dual CTA (WhatsApp + IG DM auto-copy) | Planned (Phase 4) |
+| `src/components/AnswerRecap.tsx` | Collapsible 12-answer review accordion with reset trigger | Phase 4 |
+| `src/components/SummaryView.tsx` | Personalized results + Dual CTA (WhatsApp + IG DM auto-copy) | Phase 4 |
+| `src/App.tsx` | Multi-screen flow controller (`intro`, `form`, `gate`, `summary`) | Phase 4 |
 
 ---
 
