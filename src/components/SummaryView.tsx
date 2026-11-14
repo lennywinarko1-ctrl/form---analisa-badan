@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { Check, CheckCircle2, ChevronDown, ChevronUp, Copy, Instagram, Sparkles } from 'lucide-react';
 import { BRAND_NAME, COACH_NAME, INSTAGRAM_USERNAME, WHATSAPP_NUMBER } from '../config/appConfig';
 import type { AnalysisResult, AssessmentAnswers, ContactInfo } from '../types/assessment';
 import { formatIgDmSummary, formatWhatsAppSummary } from '../utils/assessmentAnalyzer';
-import { buildInstagramDmUrl, buildWhatsAppUrl } from '../utils/phoneFormatter';
+import { buildInstagramDmUrl, buildWhatsAppUrl, detectIsMobileDevice, openInstagramAppWithFallback } from '../utils/phoneFormatter';
 import { AnswerRecap } from './AnswerRecap';
 
 interface SummaryViewProps {
@@ -14,8 +14,9 @@ interface SummaryViewProps {
 }
 
 export function SummaryView({ contact, answers, analysis, onReset }: SummaryViewProps) {
+  const [isMobile] = useState(() => detectIsMobileDevice());
   const [dmCopied, setDmCopied] = useState(false);
-  const [showDmBox, setShowDmBox] = useState(false);
+  const [showDmBox, setShowDmBox] = useState(() => !detectIsMobileDevice());
 
   const waUrl = buildWhatsAppUrl(WHATSAPP_NUMBER, formatWhatsAppSummary(contact, answers, analysis));
   const igDmUrl = buildInstagramDmUrl(INSTAGRAM_USERNAME);
@@ -33,6 +34,7 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
   ];
 
   const copyDmText = () => {
+    setShowDmBox(true);
     try {
       if (navigator.clipboard?.writeText) {
         void navigator.clipboard
@@ -40,23 +42,24 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
           .then(() => setDmCopied(true))
           .catch(() => setShowDmBox(true));
         setDmCopied(true);
-      } else {
-        setShowDmBox(true);
       }
     } catch {
       setShowDmBox(true);
     }
   };
 
+  const handleInstagramClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    copyDmText();
+    if (isMobile && openInstagramAppWithFallback(INSTAGRAM_USERNAME)) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className="mx-auto w-full max-w-2xl space-y-5">
       <header className="px-1">
-        <h2 className="text-balance text-2xl font-extrabold tracking-tight text-[#1E293B]">
-          Hasil Analisa untuk {contact.nickname}
-        </h2>
-        <p className="mt-1 text-xs font-medium text-slate-500">
-          Evaluasi Personal • {BRAND_NAME} oleh {COACH_NAME}
-        </p>
+        <h2 className="text-balance text-2xl font-extrabold tracking-tight text-[#1E293B]">Hasil Analisa untuk {contact.nickname}</h2>
+        <p className="mt-1 text-xs font-medium text-slate-500">Evaluasi Personal • {BRAND_NAME} oleh {COACH_NAME}</p>
       </header>
 
       <section className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
@@ -64,17 +67,7 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
           <div className="relative flex h-32 w-32 shrink-0 items-center justify-center">
             <svg className="h-full w-full -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
               <circle cx="50" cy="50" r={radius} fill="none" stroke="#E2E8F0" strokeWidth="8" />
-              <circle
-                cx="50"
-                cy="50"
-                r={radius}
-                fill="none"
-                stroke="#059669"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={dashOffset}
-              />
+              <circle cx="50" cy="50" r={radius} fill="none" stroke="#059669" strokeWidth="8" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={dashOffset} />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
               <span className="text-3xl font-extrabold tabular-nums text-[#1E293B]">{analysis.overallScore}</span>
@@ -155,7 +148,7 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
             href={igDmUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={copyDmText}
+            onClick={handleInstagramClick}
             className="flex min-h-[56px] w-full items-center gap-3.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-[#1E293B] shadow-xs transition-all hover:border-slate-300 active:scale-[0.99]"
           >
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 text-white">
@@ -163,7 +156,11 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
             </div>
             <div className="min-w-0">
               <p className="text-sm font-bold leading-tight">DM Instagram @{INSTAGRAM_USERNAME}</p>
-              <p className="mt-0.5 text-xs text-slate-500">Ringkasan otomatis disalin, tinggal Paste di DM</p>
+              <p className="mt-0.5 text-xs text-slate-500">
+                {isMobile
+                  ? 'Buka aplikasi Instagram & otomatis salin ringkasan DM'
+                  : 'Buka profil Instagram Web — klik Message lalu Paste ringkasan'}
+              </p>
             </div>
           </a>
         </div>
@@ -186,6 +183,11 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
           </button>
           {showDmBox && (
             <div className="mt-2 rounded-2xl border border-slate-200 bg-white p-3">
+              {!isMobile && (
+                <p className="mb-2 text-[11px] text-slate-500">
+                  Klik &ldquo;Salin Teks&rdquo; di bawah, lalu tekan tombol Message di profil Instagram {COACH_NAME}.
+                </p>
+              )}
               <pre className="whitespace-pre-wrap font-sans text-xs leading-relaxed text-slate-700 select-all">
                 {dmSummaryText}
               </pre>

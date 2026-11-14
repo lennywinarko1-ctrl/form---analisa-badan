@@ -24,3 +24,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 4 collapsible `AnswerRecap` accordion in `src/components/AnswerRecap.tsx` displaying all 12 submitted answers grouped by step with `"Ulangi Evaluasi"` action.
 - Phase 4 `SummaryView` results dashboard in `src/components/SummaryView.tsx` with circular score ring, 4 sub-score bars, BMI & protein cards, Coach Vera insights, and Dual CTA (WhatsApp + IG DM with non-blocking clipboard auto-copy and fallback preview box).
 - Phase 4 `App.tsx` wiring replacing the temporary summary card with `<SummaryView />` and smooth reset-to-intro flow.
+- Device-aware Instagram routing in `src/utils/phoneFormatter.ts` and `src/components/SummaryView.tsx` replacing slow `ig.me/m/` redirects with mobile native app handoff (`instagram://` + web profile fallback) and direct desktop Instagram web profile routing, adaptive subtitle, and auto-expanded DM preview box.
