@@ -2,5 +2,7 @@
   "name": "transformwithST — Evaluasi Kesehatan by Coach Vera",
   "description": "Evaluasi kesehatan, nutrisi, metabolisme, dan gaya hidup dalam 90 detik oleh Coach Vera (transformwithST).",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

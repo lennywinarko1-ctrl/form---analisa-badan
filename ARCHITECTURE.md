@@ -1,34 +1,35 @@
-# Architecture — transformwithST Health Assessment (`v1.0.0`)
+# Architecture — transformwithST Health Assessment (`v1.1.0`)
 
 ## 1. System Overview
-**transformwithST** (`v1.0.0`) is a mobile-first, Instagram in-app browser optimized health, nutrition, and lifestyle express assessment built for **Coach Vera**. Prospective coaching clients complete a 90-second self-evaluation, unlock their personalized metabolic and lifestyle snapshot via an IG-first ContactGate, and transition directly to a 1-on-1 consultation with Coach Vera via WhatsApp or Instagram DM.
+**transformwithST** (`v1.1.0`) is a mobile-first, Instagram in-app browser optimized health, nutrition, and lifestyle express assessment built for **Coach Vera**. Styled with a "Native Health App Glow + Coach Vera Personal Brand" aesthetic, it pairs an ice-mint `#F4F9F7` shell (`max-w-[430px]` elevated frame on desktop, full-bleed on phones), `Plus Jakarta Sans` typography, frosted glass cards, and Coach Vera's personal brand presence across every screen.
 
 ### Core Design & Engineering Constraints
 - **Strict Modularity**: Every file is strictly kept under **250 lines of code**.
-- **Mobile-First & IG In-App Ready**: Uses `min-h-[100dvh]`, `>= 44px` touch targets, and device-aware Instagram routing.
-- **Visual System**: Warm off-white canvas (`#FAFBF9`), soft sage/emerald green accents (`#059669` / `#ECFDF5`), dark slate typography (`#1E293B`), and friendly Indonesian copy.
+- **Mobile-First & IG In-App Ready**: Uses `min-h-[100dvh]`, sticky thumb-zone navigation with `safe-area-inset-bottom`, `>= 44px` touch targets, and device-aware Instagram routing.
+- **Visual System (`v1.1.0`)**: Ice-mint canvas (`#F4F9F7`), ambient emerald/teal top glow, frosted glass cards (`bg-white/90 backdrop-blur-md`), emerald-to-teal gradient CTAs/hero card, dark slate typography (`#1E293B`), and `tabular-nums`.
 
 ---
 
-## 2. Modular File Map (`v1.0.0` — Complete)
+## 2. Modular File Map (`v1.1.0` — Complete)
 
 | File Path | Responsibility | Status |
 | :--- | :--- | :--- |
-| `ARCHITECTURE.md` | System overview, file map, flow, Google Sheets & Pixel specs | v1.0.0 |
-| `CHANGELOG.md` | Versioned release history (Keep a Changelog) | v1.0.0 |
-| `src/config/appConfig.ts` | Brand constants, Coach contacts, webhook & Meta Pixel config | v1.0.0 |
+| `ARCHITECTURE.md` | System overview, file map, flow, Google Sheets & Pixel specs | v1.1.0 |
+| `CHANGELOG.md` | Versioned release history (Keep a Changelog) | v1.1.0 |
+| `src/config/appConfig.ts` | Brand constants, `COACH_AVATAR_URL`, contacts, webhook & Pixel config | v1.1.0 |
 | `src/types/assessment.ts` | TypeScript interfaces for questions, answers, contacts, & analysis | v1.0.0 |
 | `src/data/questions.ts` | 4-step / 12-question Indonesian express dataset | v1.0.0 |
-| `src/components/Header.tsx` | Compact mobile-first header with brand badge & tracked WA CTA | v1.0.0 |
+| `src/components/CoachAvatar.tsx` | Circular photo avatar with emerald ring, active dot, & `CV` fallback | v1.1.0 |
+| `src/components/Header.tsx` | Frosted sticky header with `CoachAvatar`, badge & tracked WA CTA | v1.1.0 |
 | `src/services/analyticsService.ts` | Safe Meta Pixel (`fbq`) & GA4 (`gtag`) event tracking wrapper | v1.0.0 |
 | `src/services/storageService.ts` | UTM capture, `localStorage` drafts/backups, & Google Sheets webhook | v1.0.0 |
 | `src/utils/phoneFormatter.ts` | Phone normalization, validation, WA & device-aware IG routing | v1.0.0 |
 | `src/utils/assessmentAnalyzer.ts` | BMI, protein range, 4-pillar sub-scores, insights, & WA/IG formatters | v1.0.0 |
-| `src/components/FormStep.tsx` | 4-step interactive express form, numeric steppers, & inline validation | v1.0.0 |
-| `src/components/ContactGate.tsx` | IG-first contact capture (`Nama`, `@instagram`, optional WA, honeypot) | v1.0.0 |
+| `src/components/FormStep.tsx` | 4-segment pill progress, Coach Vera Tip, tactile cards, sticky nav | v1.1.0 |
+| `src/components/ContactGate.tsx` | Coach-led IG-first gate with `CoachAvatar`, locked pill, & honeypot | v1.1.0 |
 | `src/components/AnswerRecap.tsx` | Collapsible 12-answer review accordion with reset trigger | v1.0.0 |
-| `src/components/SummaryView.tsx` | Personalized results + Dual CTA (WhatsApp + device-aware IG DM) | v1.0.0 |
-| `src/App.tsx` | Flow controller (`intro`, `form`, `gate`, `summary`) & analytics hooks | v1.0.0 |
+| `src/components/SummaryView.tsx` | Gradient score hero card + glass BMI/protein pills + Dual WA/IG CTA | v1.1.0 |
+| `src/App.tsx` | Centered `max-w-[430px]` mobile shell, Coach intro hero, & flow state | v1.1.0 |
 
 ---
 

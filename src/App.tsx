@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Clock, RotateCcw, ShieldCheck, Sparkles } from 'lucide-react';
+import { CoachAvatar } from './components/CoachAvatar';
 import { ContactGate } from './components/ContactGate';
 import { FormStep } from './components/FormStep';
 import { Header } from './components/Header';
 import { SummaryView } from './components/SummaryView';
-import { APP_VERSION, COACH_NAME, INSTAGRAM_USERNAME, META_PIXEL_ID, buildWhatsAppUrl } from './config/appConfig';
+import { APP_VERSION, BRAND_NAME, COACH_NAME, INSTAGRAM_USERNAME, META_PIXEL_ID, buildWhatsAppUrl } from './config/appConfig';
 import { ASSESSMENT_QUESTIONS, ASSESSMENT_STEPS } from './data/questions';
 import { initAnalytics, trackAssessmentStart, trackLeadSubmitted, trackStepComplete } from './services/analyticsService';
 import { EMPTY_ANSWERS, captureUtmParams, clearDraft, getUtmParams, loadDraft, saveDraft, submitToWebhook } from './services/storageService';
@@ -54,12 +55,8 @@ export default function App() {
 
   const handleStartFromIntro = (fresh: boolean) => {
     trackAssessmentStart();
-    if (fresh) {
-      resetTo('form');
-    } else {
-      setScreen('form');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    if (fresh) resetTo('form');
+    else { setScreen('form'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   };
 
   const handleNext = () => {
@@ -81,9 +78,7 @@ export default function App() {
       const prevStep = stepIndex - 1;
       setStepIndex(prevStep);
       saveDraft(answers, prevStep);
-    } else {
-      setScreen('intro');
-    }
+    } else setScreen('intro');
   };
 
   const handleContactSubmit = async (contactInfo: ContactInfo) => {
@@ -108,60 +103,73 @@ export default function App() {
   };
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-[#FAFBF9] text-[#1E293B]">
-      <Header />
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col justify-center px-4 py-6 sm:px-6 sm:py-10">
-        {screen === 'intro' && (
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-            <section className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8 lg:col-span-7">
-              <p className="mb-3 text-xs font-semibold tracking-wide text-[#059669]">Evaluasi Mandiri · {ASSESSMENT_QUESTIONS.length} Pertanyaan Singkat</p>
-              <h2 className="text-balance text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">Cek Skor Metabolisme &amp; Pola Makanmu dalam 90 Detik</h2>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-                Jawab pertanyaan singkat seputar target tubuh, pola makan, energi sore, dan tidurmu untuk mendapat gambaran skor gaya hidup dari {COACH_NAME}.
-              </p>
-              <div className="mt-6 grid grid-cols-1 gap-3 border-y border-slate-100 py-4 text-xs text-slate-600 sm:grid-cols-3">
-                <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-[#059669]" />Durasi ± 90 detik</span>
-                <span className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-[#059669]" />Hasil personal instan</span>
-                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[#059669]" />Gratis &amp; privat</span>
-              </div>
-              {hasDraft && (
-                <div className="mt-5 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#059669]/20 bg-[#ECFDF5] px-4 py-3 text-xs text-[#065F46]">
-                  <span className="font-medium">Lanjutkan pengisian sebelumnya (Langkah {stepIndex + 1} dari {ASSESSMENT_STEPS.length})</span>
-                  <button type="button" onClick={() => handleStartFromIntro(true)} className="inline-flex items-center gap-1 font-semibold text-[#059669] underline underline-offset-2"><RotateCcw className="h-3.5 w-3.5" />Mulai Ulang</button>
+    <div className="min-h-[100dvh] bg-[#E8F1ED] text-[#1E293B] sm:py-4">
+      <div className="relative mx-auto flex min-h-[100dvh] w-full max-w-[430px] flex-col bg-[#F4F9F7] sm:min-h-[calc(100dvh-2rem)] sm:rounded-[2rem] sm:border sm:border-emerald-100/90 sm:shadow-xl sm:shadow-emerald-950/5">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.16),rgba(20,184,166,0.06)_55%,transparent_80%)] sm:rounded-t-[2rem]" />
+        <Header />
+
+        <main className="relative flex flex-1 flex-col px-4 py-5">
+          {screen === 'intro' && (
+            <div className="space-y-4">
+              <section className="rounded-3xl border border-emerald-100/80 bg-white/90 p-5 shadow-sm backdrop-blur-md">
+                <div className="flex items-center gap-3.5">
+                  <CoachAvatar size="lg" />
+                  <div>
+                    <p className="text-xs font-bold text-emerald-700">{COACH_NAME} • {BRAND_NAME}</p>
+                    <h2 className="mt-0.5 text-balance text-xl font-extrabold leading-tight tracking-tight text-[#1E293B]">Cek Skor Metabolisme &amp; Nutrisi Tubuhmu</h2>
+                  </div>
                 </div>
-              )}
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button type="button" onClick={() => handleStartFromIntro(!hasDraft)} className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl bg-[#059669] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#047857] active:scale-[0.98] sm:w-auto">
+                <blockquote className="mt-4 rounded-2xl bg-[#F4F9F7] p-3.5 text-xs font-medium leading-relaxed text-slate-700">
+                  &ldquo;Yuk cek kondisi metabolisme &amp; kebutuhan proteinmu dalam 90 detik—biar nggak salah langkah lagi!&rdquo;
+                </blockquote>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-800"><Clock className="h-3.5 w-3.5 text-emerald-600" />± 90 Detik</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-800"><ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />Gratis</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-800"><Sparkles className="h-3.5 w-3.5 text-emerald-600" />Analisa Personal</span>
+                </div>
+                {hasDraft && (
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-emerald-200 bg-emerald-50/80 px-3.5 py-2.5 text-xs text-emerald-900">
+                    <span className="font-semibold">Lanjut langkah {stepIndex + 1} dari {ASSESSMENT_STEPS.length}</span>
+                    <button type="button" onClick={() => handleStartFromIntro(true)} className="inline-flex items-center gap-1 font-bold text-emerald-700 underline underline-offset-2"><RotateCcw className="h-3.5 w-3.5" />Mulai Ulang</button>
+                  </div>
+                )}
+                <button type="button" onClick={() => handleStartFromIntro(!hasDraft)} className="mt-5 inline-flex min-h-[50px] w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3 text-sm font-bold text-white shadow-sm shadow-emerald-600/25 transition-all active:scale-[0.98]">
                   <span>{hasDraft ? 'Lanjutkan Evaluasi' : 'Mulai Evaluasi Gratis'}</span><ArrowRight className="h-4 w-4 shrink-0" />
                 </button>
-                <a href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center justify-center rounded-2xl px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100">Atau tanya {COACH_NAME} dulu via WA</a>
-              </div>
-            </section>
-            <aside className="rounded-3xl border border-slate-200/70 bg-white/70 p-6 lg:col-span-5">
-              <h3 className="text-sm font-bold">4 Tahap Evaluasi Singkat</h3>
-              <p className="mt-1 text-xs text-slate-500">Dirancang ringan untuk bio @{INSTAGRAM_USERNAME}.</p>
-              <ol className="mt-4 divide-y divide-slate-100">
-                {ASSESSMENT_STEPS.map((item) => (
-                  <li key={item.step} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-                    <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ECFDF5] text-xs font-bold tabular-nums text-[#059669]">{item.step}</span>
-                    <div className="min-w-0"><p className="text-sm font-semibold">{item.title}</p><p className="mt-0.5 text-xs leading-relaxed text-slate-500">{item.subtitle}</p></div>
-                  </li>
-                ))}
-              </ol>
-            </aside>
-          </div>
-        )}
-        {screen === 'form' && (
-          <FormStep step={ASSESSMENT_STEPS[stepIndex]} stepIndex={stepIndex} totalSteps={ASSESSMENT_STEPS.length} answers={answers} onChange={handleAnswerChange} onNext={handleNext} onBack={handleBack} />
-        )}
-        {screen === 'gate' && (
-          <ContactGate initialContact={contact} isSubmitting={isSubmitting} onSubmit={handleContactSubmit} onBack={() => setScreen('form')} />
-        )}
-        {screen === 'summary' && contact && analysis && (
-          <SummaryView contact={contact} answers={answers} analysis={analysis} onReset={() => resetTo('intro')} />
-        )}
-      </main>
-      <footer className="border-t border-slate-200/70 py-4 text-center text-xs text-slate-400">© {new Date().getFullYear()} transformwithST · {COACH_NAME}</footer>
+                <a href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-[40px] w-full items-center justify-center rounded-xl text-xs font-semibold text-slate-500 hover:text-emerald-700">Atau tanya {COACH_NAME} dulu via WhatsApp</a>
+              </section>
+              <section className="rounded-3xl border border-emerald-100/80 bg-white/90 p-4 shadow-xs backdrop-blur-md">
+                <div className="mb-2.5 flex items-center justify-between text-xs">
+                  <h3 className="font-bold text-[#1E293B]">4 Tahap ({ASSESSMENT_QUESTIONS.length} Pertanyaan)</h3>
+                  <span className="font-medium text-slate-400">@{INSTAGRAM_USERNAME}</span>
+                </div>
+                <ol className="divide-y divide-emerald-50">
+                  {ASSESSMENT_STEPS.map((item) => (
+                    <li key={item.step} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0">
+                      <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-xs font-extrabold tabular-nums text-emerald-700">{item.step}</span>
+                      <div className="min-w-0"><p className="text-xs font-bold text-[#1E293B]">{item.title}</p><p className="truncate text-[11px] text-slate-500">{item.subtitle}</p></div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            </div>
+          )}
+
+          {screen === 'form' && (
+            <FormStep step={ASSESSMENT_STEPS[stepIndex]} stepIndex={stepIndex} totalSteps={ASSESSMENT_STEPS.length} answers={answers} onChange={handleAnswerChange} onNext={handleNext} onBack={handleBack} />
+          )}
+          {screen === 'gate' && (
+            <ContactGate initialContact={contact} isSubmitting={isSubmitting} onSubmit={handleContactSubmit} onBack={() => setScreen('form')} />
+          )}
+          {screen === 'summary' && contact && analysis && (
+            <SummaryView contact={contact} answers={answers} analysis={analysis} onReset={() => resetTo('intro')} />
+          )}
+        </main>
+
+        <footer className="py-3 text-center text-[11px] text-slate-400">
+          © {new Date().getFullYear()} {BRAND_NAME} · {COACH_NAME}
+        </footer>
+      </div>
     </div>
   );
 }

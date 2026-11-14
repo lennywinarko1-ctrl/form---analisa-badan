@@ -3,6 +3,7 @@ import { AlertCircle, ArrowLeft, Lock, ShieldCheck, Sparkles } from 'lucide-reac
 import { BRAND_NAME, COACH_NAME } from '../config/appConfig';
 import type { ContactInfo } from '../types/assessment';
 import { isValidOptionalPhone, normalizeIndonesianPhone } from '../utils/phoneFormatter';
+import { CoachAvatar } from './CoachAvatar';
 
 interface ContactGateProps {
   initialContact?: ContactInfo;
@@ -53,24 +54,25 @@ export function ContactGate({ initialContact, isSubmitting, onSubmit, onBack }: 
     });
   };
 
-  const inputBase = 'mt-1.5 min-h-[48px] w-full rounded-2xl border bg-[#FAFBF9] px-4 text-sm text-[#1E293B] outline-none transition-colors focus:bg-white';
+  const inputBase = 'mt-1.5 min-h-[48px] w-full rounded-2xl border bg-[#F4F9F7] px-4 text-sm text-[#1E293B] outline-none transition-colors focus:bg-white';
 
   return (
-    <div className="mx-auto w-full max-w-xl">
-      <div className="mb-5 flex items-start gap-3.5 rounded-3xl border border-[#059669]/20 bg-[#ECFDF5] p-5">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white text-[#059669] shadow-xs">
-          <Lock className="h-5 w-5" />
-        </div>
-        <div>
-          <h2 className="text-base font-extrabold text-[#065F46] sm:text-lg">Skor &amp; Estimasi Protein Harianmu Sudah Siap!</h2>
-          <p className="mt-1 text-xs leading-relaxed text-[#047857]">
-            Isi kontak singkat di bawah ini untuk membuka hasil skor metabolisme, BMI, serta catatan personal dari {COACH_NAME}.
+    <div className="space-y-4">
+      <div className="rounded-3xl border border-emerald-100/80 bg-white/90 p-4 shadow-sm backdrop-blur-md">
+        <div className="flex items-center gap-3">
+          <CoachAvatar size="md" />
+          <p className="text-xs font-medium leading-relaxed text-slate-700">
+            &ldquo;Analisa kamu sudah siap! Kenalan sebentar yuk supaya {COACH_NAME} bisa sapa kamu di DM.&rdquo;
           </p>
+        </div>
+        <div className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-emerald-200/80 bg-emerald-50/80 px-3.5 py-2 text-xs font-bold text-emerald-800">
+          <Lock className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
+          <span>Skor &amp; Target Protein: Terkunci • 1 langkah lagi</span>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} noValidate className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
-        <div className="space-y-5">
+      <form onSubmit={handleSubmit} noValidate className="rounded-3xl border border-emerald-100/80 bg-white/90 p-5 shadow-sm backdrop-blur-md">
+        <div className="space-y-4">
           <div>
             <label htmlFor="gate-nickname" className="block text-sm font-bold text-[#1E293B]">
               Nama Panggilan <span className="text-rose-500">*</span>
@@ -82,7 +84,7 @@ export function ContactGate({ initialContact, isSubmitting, onSubmit, onBack }: 
               placeholder="Contoh: Dina"
               value={nickname}
               onChange={(e) => { setNickname(e.target.value); clearError('nickname'); }}
-              className={`${inputBase} ${errors.nickname ? 'border-rose-400 focus:border-rose-500' : 'border-slate-200 focus:border-[#059669]'}`}
+              className={`${inputBase} ${errors.nickname ? 'border-rose-400 focus:border-rose-500' : 'border-emerald-100 focus:border-emerald-500'}`}
             />
             {errors.nickname && (
               <p role="alert" className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-rose-600">
@@ -105,8 +107,8 @@ export function ContactGate({ initialContact, isSubmitting, onSubmit, onBack }: 
                 placeholder="username_kamu"
                 value={igUsername}
                 onChange={(e) => { setIgUsername(e.target.value.replace(/^@+/, '').replace(/\s+/g, '')); clearError('igUsername'); }}
-                className={`min-h-[48px] w-full rounded-2xl border bg-[#FAFBF9] pl-8 pr-4 text-sm text-[#1E293B] outline-none transition-colors focus:bg-white ${
-                  errors.igUsername ? 'border-rose-400 focus:border-rose-500' : 'border-slate-200 focus:border-[#059669]'
+                className={`min-h-[48px] w-full rounded-2xl border bg-[#F4F9F7] pl-8 pr-4 text-sm text-[#1E293B] outline-none transition-colors focus:bg-white ${
+                  errors.igUsername ? 'border-rose-400 focus:border-rose-500' : 'border-emerald-100 focus:border-emerald-500'
                 }`}
               />
             </div>
@@ -128,7 +130,7 @@ export function ContactGate({ initialContact, isSubmitting, onSubmit, onBack }: 
               placeholder="Contoh: 081234567890"
               value={whatsapp}
               onChange={(e) => { setWhatsapp(e.target.value); clearError('whatsapp'); }}
-              className={`${inputBase} tabular-nums ${errors.whatsapp ? 'border-rose-400 focus:border-rose-500' : 'border-slate-200 focus:border-[#059669]'}`}
+              className={`${inputBase} tabular-nums ${errors.whatsapp ? 'border-rose-400 focus:border-rose-500' : 'border-emerald-100 focus:border-emerald-500'}`}
             />
             <p className="mt-1.5 text-xs leading-relaxed text-slate-500">
               Opsional — isi jika ingin dikirimi hasil via WA. Kalau belum nyaman, boleh dikosongkan!
@@ -146,24 +148,24 @@ export function ContactGate({ initialContact, isSubmitting, onSubmit, onBack }: 
           </div>
         </div>
 
-        <div className="mt-5 flex items-start gap-2 rounded-2xl bg-[#FAFBF9] p-3 text-xs leading-relaxed text-slate-600">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#059669]" />
+        <div className="mt-4 flex items-start gap-2 rounded-2xl bg-[#F4F9F7] p-3 text-xs leading-relaxed text-slate-600">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
           <span>Data kamu 100% rahasia dan hanya digunakan {COACH_NAME} ({BRAND_NAME}) untuk evaluasi personal—tanpa spam.</span>
         </div>
 
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-5 flex items-center gap-2.5">
           <button
             type="button"
             onClick={onBack}
             disabled={isSubmitting}
-            className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+            className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-emerald-100 bg-white px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 disabled:opacity-50"
           >
             <ArrowLeft className="h-4 w-4" /><span>Kembali</span>
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl bg-[#059669] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#047857] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-3 text-sm font-bold text-white shadow-sm shadow-emerald-600/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <Sparkles className="h-4 w-4 shrink-0" />
             <span>{isSubmitting ? 'Menyiapkan Hasil...' : 'Buka Hasil Analisa Saya'}</span>

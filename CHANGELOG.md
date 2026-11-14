@@ -5,6 +5,18 @@ All notable changes to the **transformwithST** health assessment web application
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-11-14
+
+### Added
+- `src/components/CoachAvatar.tsx`: Reusable circular Coach Vera avatar with emerald gradient ring, active indicator dot, and graceful `"CV"` initials fallback when `/coach-vera.webp` is absent.
+- `COACH_AVATAR_URL` config constant and `APP_VERSION = '1.1.0'` in `src/config/appConfig.ts`.
+
+### Changed
+- **Visual Theme & Mobile App Shell** (`index.html`, `src/index.css`, `src/App.tsx`): Adopted `Plus Jakarta Sans` (400–800) globally, ice-mint `#F4F9F7` canvas with ambient emerald/teal top glow, frosted glass cards, and a centered `max-w-[430px]` elevated phone frame on desktop.
+- **Personal Brand Header & Intro** (`src/components/Header.tsx`, `src/App.tsx`): Integrated `CoachAvatar`, Coach Vera quote card, 3 benefit pills (`± 90 Detik`, `Gratis`, `Analisa Personal`), and gradient CTA button.
+- **Tactile Form UX** (`src/components/FormStep.tsx`): Added 4-segment pill progress bar, `"Coach Vera Tip"` micro-bubble, icon-enhanced tactile choice cards with emerald glow ring, and sticky thumb-zone bottom navigation with safe-area padding.
+- **ContactGate & Summary Hero** (`src/components/ContactGate.tsx`, `src/components/SummaryView.tsx`): Added `CoachAvatar` conversational prompt + locked-score pill in `ContactGate`, and upgraded `SummaryView` with an emerald-to-teal gradient hero card, tabular SVG score ring, and glass `BMI` / `Estimasi Protein` pills.
+
 ## [1.0.0] - 2026-11-14
 
 ### Added

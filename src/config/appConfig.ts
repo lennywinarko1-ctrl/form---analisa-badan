@@ -1,7 +1,9 @@
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.1.0';
 
 export const BRAND_NAME = 'transformwithST';
 export const COACH_NAME = 'Coach Vera';
+// Change to '/coach-vera.jpg' if using a JPG portrait in public/
+export const COACH_AVATAR_URL = '/coach-vera.webp';
 
 export const WHATSAPP_NUMBER = '62818673997';
 export const INSTAGRAM_USERNAME = 'veraekaraga';
