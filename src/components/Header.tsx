@@ -1,4 +1,5 @@
 import { BRAND_NAME, COACH_NAME, buildWhatsAppUrl } from '../config/appConfig';
+import { trackContactClick } from '../services/analyticsService';
 
 export function Header() {
   const whatsappUrl = buildWhatsAppUrl();
@@ -24,6 +25,7 @@ export function Header() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackContactClick('header_whatsapp')}
           aria-label="Chat WhatsApp dengan Coach Vera"
           className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-xl border border-[#059669]/20 bg-[#ECFDF5] px-3.5 py-2 text-xs font-semibold text-[#059669] transition-colors hover:bg-[#059669] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#059669] active:scale-[0.98]"
         >

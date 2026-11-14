@@ -6,7 +6,7 @@ export const COACH_NAME = 'Coach Vera';
 export const WHATSAPP_NUMBER = '62818673997';
 export const INSTAGRAM_USERNAME = 'veraekaraga';
 
-export const GOOGLE_SCRIPT_WEBHOOK_URL = '';
+export const GOOGLE_SCRIPT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxMqdEar480Wu9FHSiJ_mPNkCL-nX1Kpjm9QuW02yvbSLBekVmlaZ_J4P0Tc58JCLzd/exec';
 export const META_PIXEL_ID = '';
 
 export const WHATSAPP_INTRO_MESSAGE =

@@ -25,3 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phase 4 `SummaryView` results dashboard in `src/components/SummaryView.tsx` with circular score ring, 4 sub-score bars, BMI & protein cards, Coach Vera insights, and Dual CTA (WhatsApp + IG DM with non-blocking clipboard auto-copy and fallback preview box).
 - Phase 4 `App.tsx` wiring replacing the temporary summary card with `<SummaryView />` and smooth reset-to-intro flow.
 - Device-aware Instagram routing in `src/utils/phoneFormatter.ts` and `src/components/SummaryView.tsx` replacing slow `ig.me/m/` redirects with mobile native app handoff (`instagram://` + web profile fallback) and direct desktop Instagram web profile routing, adaptive subtitle, and auto-expanded DM preview box.
+- Phase 5 ad-blocker-safe Meta Pixel (`fbq`) & GA4 (`gtag`) wrapper in `src/services/analyticsService.ts` (`initAnalytics`, `trackAssessmentStart`, `trackStepComplete`, `trackLeadSubmitted`, `trackContactClick`).
+- Phase 5 Google Apps Script (Option A) webhook delivery in `src/services/storageService.ts` with flattened Google Sheets rows, `localStorage` backup under `transformwithst_submissions_v1`, and non-blocking `no-cors` fetch.
+- Phase 5 analytics event wiring across `src/App.tsx`, `src/components/Header.tsx`, and `src/components/SummaryView.tsx`, completing `v1.0.0`.

@@ -1,6 +1,7 @@
 import { useState, type MouseEvent } from 'react';
 import { Check, CheckCircle2, ChevronDown, ChevronUp, Copy, Instagram, Sparkles } from 'lucide-react';
 import { BRAND_NAME, COACH_NAME, INSTAGRAM_USERNAME, WHATSAPP_NUMBER } from '../config/appConfig';
+import { trackContactClick } from '../services/analyticsService';
 import type { AnalysisResult, AssessmentAnswers, ContactInfo } from '../types/assessment';
 import { formatIgDmSummary, formatWhatsAppSummary } from '../utils/assessmentAnalyzer';
 import { buildInstagramDmUrl, buildWhatsAppUrl, detectIsMobileDevice, openInstagramAppWithFallback } from '../utils/phoneFormatter';
@@ -49,6 +50,7 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
   };
 
   const handleInstagramClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    trackContactClick('instagram_dm');
     copyDmText();
     if (isMobile && openInstagramAppWithFallback(INSTAGRAM_USERNAME)) {
       e.preventDefault();
@@ -133,6 +135,7 @@ export function SummaryView({ contact, answers, analysis, onReset }: SummaryView
             href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackContactClick('whatsapp')}
             className="flex min-h-[56px] w-full items-center gap-3.5 rounded-2xl bg-[#059669] px-4 py-3 text-white shadow-sm transition-all hover:bg-[#047857] active:scale-[0.99]"
           >
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-6 w-6 shrink-0">
