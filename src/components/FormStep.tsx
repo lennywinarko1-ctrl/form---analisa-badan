@@ -91,19 +91,19 @@ export function FormStep({ step, stepIndex, totalSteps, answers, onChange, onNex
   return (
     <div className="flex flex-1 flex-col">
       <div className="mb-4">
-        <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-600">
-          <span className="tabular-nums text-emerald-700">Langkah {stepIndex + 1} dari {totalSteps}</span>
-          <span className="truncate text-slate-500">{step.title}</span>
+        <div className="mb-2 flex items-center justify-between text-xs font-bold">
+          <span className="tabular-nums text-[#265345]">Langkah {stepIndex + 1} dari {totalSteps}</span>
+          <span className="truncate text-stone-600">{step.title}</span>
         </div>
         <div className="grid grid-cols-4 gap-1.5" aria-hidden="true">
           {Array.from({ length: totalSteps }).map((_, idx) => (
-            <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx <= stepIndex ? 'bg-gradient-to-r from-emerald-500 to-teal-500' : 'bg-emerald-100'}`} />
+            <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx <= stepIndex ? 'bg-gradient-to-r from-[#265345] to-[#C96A50]' : 'bg-stone-200/80'}`} />
           ))}
         </div>
       </div>
 
-      <div className="mb-5 flex items-center gap-2 rounded-2xl border border-emerald-100 bg-white/90 px-3.5 py-2.5 text-xs text-slate-600 shadow-xs backdrop-blur-md">
-        <span className="shrink-0 font-bold text-emerald-700">Coach Vera Tip:</span>
+      <div className="mb-5 flex items-start gap-2 rounded-2xl border border-[#F3D5CA] bg-[#FDF2EE] px-3.5 py-2.5 text-xs text-stone-700 shadow-xs">
+        <span className="shrink-0 font-bold text-[#A8513A]">Coach Vera Tip:</span>
         <span className="leading-snug">{COACH_TIPS[step.step] ?? step.subtitle}</span>
       </div>
 
@@ -114,9 +114,9 @@ export function FormStep({ step, stepIndex, totalSteps, answers, onChange, onNex
           const isMulti = q.type === 'multi-choice';
           return (
             <fieldset key={q.id} className="space-y-2.5">
-              <legend className="text-[15px] font-bold leading-snug text-[#1E293B]">
+              <legend className="text-[15px] font-bold leading-snug text-stone-800">
                 {q.label}
-                {isMulti && <span className="ml-1.5 text-xs font-medium text-slate-500">(bisa pilih &gt;1)</span>}
+                {isMulti && <span className="ml-1.5 text-xs font-medium text-stone-600">(bisa pilih &gt;1)</span>}
               </legend>
               <div className={q.type === 'gender' ? 'grid grid-cols-2 gap-2.5' : 'space-y-2.5'}>
                 {q.options?.map((opt) => {
@@ -127,19 +127,19 @@ export function FormStep({ step, stepIndex, totalSteps, answers, onChange, onNex
                       type="button"
                       onClick={() => (isMulti ? toggleMulti(q.id, opt.value) : updateField(q.id, opt.value))}
                       aria-pressed={selected}
-                      className={`flex min-h-[54px] w-full items-center justify-between gap-2.5 rounded-2xl border px-3.5 py-3 text-left text-sm font-semibold transition-all duration-150 active:scale-[0.98] ${
+                      className={`flex min-h-[54px] w-full items-center justify-between gap-2.5 rounded-2xl border px-3.5 py-3 text-left text-[15px] font-medium transition-all duration-150 active:scale-[0.98] ${
                         selected
-                          ? 'border-emerald-500 bg-emerald-50/90 text-emerald-900 ring-2 ring-emerald-500/20 shadow-xs'
-                          : 'border-emerald-100/80 bg-white/90 text-[#1E293B] shadow-xs backdrop-blur-md hover:border-emerald-200'
+                          ? 'border-[#265345] bg-[#FDF2EE] text-stone-900 ring-1 ring-[#265345]/20 shadow-xs'
+                          : 'border-stone-200/90 bg-white text-stone-800 shadow-xs hover:border-stone-300'
                       }`}
                     >
                       <span className="flex min-w-0 items-center gap-2.5">
                         <span aria-hidden="true" className="text-base leading-none">{OPTION_ICONS[opt.value] ?? '•'}</span>
                         <span className="leading-snug">{opt.label}</span>
                       </span>
-                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center border ${isMulti ? 'rounded-md' : 'rounded-full'} ${selected ? (isMulti ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-emerald-600 bg-white') : 'border-slate-300 bg-white'}`}>
+                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center border ${isMulti ? 'rounded-md' : 'rounded-full'} ${selected ? (isMulti ? 'border-[#265345] bg-[#265345] text-white' : 'border-[#265345] bg-white') : 'border-stone-300 bg-white'}`}>
                         {selected && isMulti && <Check className="h-3.5 w-3.5" />}
-                        {selected && !isMulti && <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" />}
+                        {selected && !isMulti && <span className="h-2.5 w-2.5 rounded-full bg-[#265345]" />}
                       </span>
                     </button>
                   );
@@ -160,10 +160,10 @@ export function FormStep({ step, stepIndex, totalSteps, answers, onChange, onNex
               const val = answers[q.id];
               const error = errors[q.id];
               return (
-                <div key={q.id} className={`rounded-2xl border bg-white/90 p-3.5 shadow-xs backdrop-blur-md ${error ? 'border-rose-300' : 'border-emerald-100/80'}`}>
-                  <label htmlFor={`field-${q.id}`} className="block text-sm font-bold text-[#1E293B]">{q.label}</label>
+                <div key={q.id} className={`rounded-2xl border bg-white p-3.5 shadow-xs ${error ? 'border-rose-300' : 'border-stone-200/80'}`}>
+                  <label htmlFor={`field-${q.id}`} className="block text-[15px] font-bold text-stone-800">{q.label}</label>
                   <div className="mt-2 flex items-center gap-2">
-                    <button type="button" onClick={() => adjustNumber(q, -1)} aria-label={`Kurangi ${q.label}`} className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-emerald-100 bg-[#F4F9F7] text-slate-700 active:scale-95">
+                    <button type="button" onClick={() => adjustNumber(q, -1)} aria-label={`Kurangi ${q.label}`} className="flex h-11 w-11 min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-stone-200/90 bg-[#FAF7F2] text-stone-700 active:scale-95">
                       <Minus className="h-4 w-4" />
                     </button>
                     <div className="relative flex-1">
@@ -175,11 +175,11 @@ export function FormStep({ step, stepIndex, totalSteps, answers, onChange, onNex
                         placeholder={q.placeholder}
                         value={val === '' ? '' : String(val)}
                         onChange={(e) => { const d = e.target.value.replace(/\D/g, ''); updateField(q.id, d === '' ? '' : Number(d)); }}
-                        className="min-h-[44px] w-full rounded-xl border border-emerald-100 bg-[#F4F9F7] px-3 pr-12 text-center text-base font-extrabold tabular-nums text-[#1E293B] outline-none focus:border-emerald-500 focus:bg-white"
+                        className="min-h-[44px] w-full rounded-xl border border-stone-200/90 bg-[#FAF7F2] px-3 pr-12 text-center text-base font-extrabold tabular-nums text-stone-800 outline-none focus:border-[#265345] focus:bg-white"
                       />
-                      {q.unit && <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">{q.unit}</span>}
+                      {q.unit && <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-stone-600">{q.unit}</span>}
                     </div>
-                    <button type="button" onClick={() => adjustNumber(q, 1)} aria-label={`Tambah ${q.label}`} className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-emerald-100 bg-[#F4F9F7] text-slate-700 active:scale-95">
+                    <button type="button" onClick={() => adjustNumber(q, 1)} aria-label={`Tambah ${q.label}`} className="flex h-11 w-11 min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl border border-stone-200/90 bg-[#FAF7F2] text-stone-700 active:scale-95">
                       <Plus className="h-4 w-4" />
                     </button>
                   </div>
@@ -195,11 +195,11 @@ export function FormStep({ step, stepIndex, totalSteps, answers, onChange, onNex
         )}
       </div>
 
-      <div className="sticky bottom-0 z-20 -mx-4 mt-4 flex items-center gap-2.5 border-t border-emerald-100/80 bg-[#F4F9F7]/90 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md">
-        <button type="button" onClick={onBack} className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-emerald-100 bg-white/90 px-4 py-3 text-sm font-bold text-slate-700 shadow-xs active:scale-[0.98]">
+      <div className="sticky bottom-0 z-20 -mx-4 mt-4 flex items-center gap-2.5 border-t border-stone-200/70 bg-[#FAF7F2]/95 px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur-md">
+        <button type="button" onClick={onBack} className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 shadow-xs active:scale-[0.98]">
           <ArrowLeft className="h-4 w-4" /><span>Kembali</span>
         </button>
-        <button type="button" onClick={handleNextClick} className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-3 text-sm font-bold text-white shadow-sm shadow-emerald-600/20 active:scale-[0.98]">
+        <button type="button" onClick={handleNextClick} className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl bg-[#265345] px-5 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#1E4337] active:scale-[0.98]">
           <span>{isFinalStep ? 'Lihat Hasil Analisa' : 'Lanjut'}</span><ArrowRight className="h-4 w-4" />
         </button>
       </div>

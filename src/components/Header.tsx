@@ -6,18 +6,18 @@ export function Header() {
   const whatsappUrl = buildWhatsAppUrl();
 
   return (
-    <header className="sticky top-0 z-30 border-b border-emerald-100/80 bg-[#F4F9F7]/85 backdrop-blur-md">
+    <header className="sticky top-0 z-30 border-b border-stone-200/70 bg-[#FAF7F2]/90 backdrop-blur-md">
       <div className="flex items-center justify-between gap-2.5 px-4 py-2.5">
         <div className="flex min-w-0 flex-1 items-center gap-2.5">
           <CoachAvatar size="sm" />
           <div className="min-w-0 flex-1">
-            <span className="inline-flex items-center rounded-full bg-emerald-100/80 px-2 py-0.5 text-[10px] font-bold tracking-tight text-emerald-700">
+            <span className="inline-flex items-center rounded-full bg-[#265345]/10 px-2 py-0.5 text-[10px] font-bold tracking-tight text-[#265345]">
               {BRAND_NAME}
             </span>
-            <h1 className="mt-0.5 truncate text-xs font-extrabold tracking-tight text-[#1E293B] sm:text-sm">
+            <h1 className="mt-0.5 truncate text-xs font-extrabold tracking-tight text-stone-800 sm:text-sm">
               Evaluasi Kesehatan &amp; Nutrisi
             </h1>
-            <p className="truncate text-[11px] font-medium text-slate-500">
+            <p className="truncate text-[11px] font-medium text-stone-600">
               oleh {COACH_NAME}
             </p>
           </div>
@@ -29,7 +29,7 @@ export function Header() {
           rel="noopener noreferrer"
           onClick={() => trackContactClick('header_whatsapp')}
           aria-label="Chat WhatsApp dengan Coach Vera"
-          className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-emerald-200/80 bg-white/90 px-3 py-2 text-xs font-bold text-emerald-700 shadow-xs transition-all hover:bg-emerald-600 hover:text-white active:scale-[0.97]"
+          className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-emerald-200/90 bg-white px-3 py-2 text-xs font-bold text-[#059669] shadow-xs transition-all hover:bg-[#059669] hover:text-white active:scale-[0.97]"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-4 w-4 shrink-0">
             <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.77 14.01c-.24.68-1.42 1.3-1.97 1.38-.5.08-1.15.11-1.86-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.27-5.06-4.47-.15-.2-1.21-1.61-1.21-3.07 0-1.46.76-2.18 1.03-2.48.27-.3.59-.37.79-.37.2 0 .4 0 .57.01.18.01.43-.07.67.51.24.58.83 2.02.9 2.17.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.38-.44.51-.15.15-.3.31-.13.61.17.3.76 1.25 1.63 2.03 1.12 1 2.07 1.31 2.37 1.46.3.15.47.13.65-.08.17-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.27.1 1.73.82 2.03.97.3.15.5.22.57.34.08.13.08.73-.16 1.41z" />

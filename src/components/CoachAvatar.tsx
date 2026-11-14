@@ -18,19 +18,19 @@ export function CoachAvatar({ size = 'md', className = '' }: CoachAvatarProps) {
 
   return (
     <div className={`relative inline-flex shrink-0 ${s.outer} ${className}`}>
-      <div className="h-full w-full rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 p-[2px] shadow-xs">
+      <div className="h-full w-full rounded-full bg-gradient-to-tr from-[#265345] to-[#C96A50] p-[2px] shadow-xs">
         {!imgError ? (
           <img
             src={COACH_AVATAR_URL}
             alt={COACH_NAME}
             referrerPolicy="no-referrer"
             onError={() => setImgError(true)}
-            className="h-full w-full rounded-full bg-emerald-50 object-cover"
+            className="h-full w-full rounded-full bg-[#FDF2EE] object-cover"
           />
         ) : (
           <div
             aria-label={COACH_NAME}
-            className={`flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-emerald-600 to-teal-500 font-extrabold tracking-tight text-white ${s.text}`}
+            className={`flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-[#265345] to-[#3A6F5E] font-extrabold tracking-tight text-white ${s.text}`}
           >
             CV
           </div>
@@ -38,7 +38,7 @@ export function CoachAvatar({ size = 'md', className = '' }: CoachAvatarProps) {
       </div>
       <span
         aria-hidden="true"
-        className={`absolute rounded-full border-2 border-white bg-emerald-500 ${s.dot}`}
+        className={`absolute rounded-full border-2 border-white bg-[#265345] ${s.dot}`}
       />
     </div>
   );

@@ -1,35 +1,38 @@
-# Architecture — transformwithST Health Assessment (`v1.1.0`)
+# Architecture — transformwithST Health Assessment (`v1.1.1`)
 
 ## 1. System Overview
-**transformwithST** (`v1.1.0`) is a mobile-first, Instagram in-app browser optimized health, nutrition, and lifestyle express assessment built for **Coach Vera**. Styled with a "Native Health App Glow + Coach Vera Personal Brand" aesthetic, it pairs an ice-mint `#F4F9F7` shell (`max-w-[430px]` elevated frame on desktop, full-bleed on phones), `Plus Jakarta Sans` typography, frosted glass cards, and Coach Vera's personal brand presence across every screen.
+**transformwithST** (`v1.1.1`) is a mobile-first, Instagram in-app browser optimized health, nutrition, and lifestyle express assessment built for **Coach Vera**, tailored for Indonesian women aged 20–60. Styled with a 60-30-10 Warm Wellness aesthetic, it pairs a warm ivory `#FAF7F2` shell (`max-w-[430px]` elevated frame on desktop, full-bleed on phones), `Plus Jakarta Sans` typography, high-contrast stone/charcoal readability, and Coach Vera's personal brand presence across every screen.
 
 ### Core Design & Engineering Constraints
 - **Strict Modularity**: Every file is strictly kept under **250 lines of code**.
-- **Mobile-First & IG In-App Ready**: Uses `min-h-[100dvh]`, sticky thumb-zone navigation with `safe-area-inset-bottom`, `>= 44px` touch targets, and device-aware Instagram routing.
-- **Visual System (`v1.1.0`)**: Ice-mint canvas (`#F4F9F7`), ambient emerald/teal top glow, frosted glass cards (`bg-white/90 backdrop-blur-md`), emerald-to-teal gradient CTAs/hero card, dark slate typography (`#1E293B`), and `tabular-nums`.
+- **Mobile-First & IG In-App Ready**: Uses `min-h-[100dvh]`, sticky thumb-zone navigation with `safe-area-inset-bottom`, `>= 44px` touch targets, `text-[15px]` option readability, and device-aware Instagram routing.
+- **60-30-10 Visual System (`v1.1.1`)**:
+  - **60% Neutral Canvas**: Warm ivory (`#FAF7F2`), soft peach-blush top ambient glow (`#FDECE6`), crisp white cards (`#FFFFFF`) with `border-stone-200/80`.
+  - **30% Grounded Anchor**: Deep muted sage (`#265345` / `#244C40`) for primary CTAs, headings, and summary hero card; warm charcoal (`text-stone-800`) and readable helper copy (`text-stone-600`).
+  - **10% Warm Accent**: Soft blush (`#FDF2EE`) and warm terracotta (`#C96A50` / `#F3D5CA`) for Coach Vera tip bubbles, quotes, locked-score pills, and selected option highlights.
 
 ---
 
-## 2. Modular File Map (`v1.1.0` — Complete)
+## 2. Modular File Map (`v1.1.1` — Complete)
 
 | File Path | Responsibility | Status |
 | :--- | :--- | :--- |
-| `ARCHITECTURE.md` | System overview, file map, flow, Google Sheets & Pixel specs | v1.1.0 |
-| `CHANGELOG.md` | Versioned release history (Keep a Changelog) | v1.1.0 |
-| `src/config/appConfig.ts` | Brand constants, `COACH_AVATAR_URL`, contacts, webhook & Pixel config | v1.1.0 |
+| `ARCHITECTURE.md` | System overview, file map, flow, Google Sheets & Pixel specs | v1.1.1 |
+| `CHANGELOG.md` | Versioned release history (Keep a Changelog) | v1.1.1 |
+| `src/config/appConfig.ts` | Brand constants, `COACH_AVATAR_URL`, contacts, webhook & Pixel config | v1.1.1 |
 | `src/types/assessment.ts` | TypeScript interfaces for questions, answers, contacts, & analysis | v1.0.0 |
 | `src/data/questions.ts` | 4-step / 12-question Indonesian express dataset | v1.0.0 |
-| `src/components/CoachAvatar.tsx` | Circular photo avatar with emerald ring, active dot, & `CV` fallback | v1.1.0 |
-| `src/components/Header.tsx` | Frosted sticky header with `CoachAvatar`, badge & tracked WA CTA | v1.1.0 |
+| `src/components/CoachAvatar.tsx` | Circular photo avatar with sage-terracotta ring, active dot, & `CV` fallback | v1.1.1 |
+| `src/components/Header.tsx` | Warm ivory sticky header with `CoachAvatar`, sage badge & WA CTA pill | v1.1.1 |
 | `src/services/analyticsService.ts` | Safe Meta Pixel (`fbq`) & GA4 (`gtag`) event tracking wrapper | v1.0.0 |
 | `src/services/storageService.ts` | UTM capture, `localStorage` drafts/backups, & Google Sheets webhook | v1.0.0 |
 | `src/utils/phoneFormatter.ts` | Phone normalization, validation, WA & device-aware IG routing | v1.0.0 |
 | `src/utils/assessmentAnalyzer.ts` | BMI, protein range, 4-pillar sub-scores, insights, & WA/IG formatters | v1.0.0 |
-| `src/components/FormStep.tsx` | 4-segment pill progress, Coach Vera Tip, tactile cards, sticky nav | v1.1.0 |
-| `src/components/ContactGate.tsx` | Coach-led IG-first gate with `CoachAvatar`, locked pill, & honeypot | v1.1.0 |
-| `src/components/AnswerRecap.tsx` | Collapsible 12-answer review accordion with reset trigger | v1.0.0 |
-| `src/components/SummaryView.tsx` | Gradient score hero card + glass BMI/protein pills + Dual WA/IG CTA | v1.1.0 |
-| `src/App.tsx` | Centered `max-w-[430px]` mobile shell, Coach intro hero, & flow state | v1.1.0 |
+| `src/components/FormStep.tsx` | Sage-terracotta progress, blush Tip bubble, `15px` option cards, sticky nav | v1.1.1 |
+| `src/components/ContactGate.tsx` | Coach-led IG-first gate with `CoachAvatar`, blush locked pill, & honeypot | v1.1.1 |
+| `src/components/AnswerRecap.tsx` | Collapsible 12-answer review accordion in warm stone/ivory harmony | v1.1.1 |
+| `src/components/SummaryView.tsx` | Deep sage hero card, champagne-terracotta score ring, Dual WA/IG CTA | v1.1.1 |
+| `src/App.tsx` | Centered `max-w-[430px]` ivory shell, Coach intro hero, & flow state | v1.1.1 |
 
 ---
 

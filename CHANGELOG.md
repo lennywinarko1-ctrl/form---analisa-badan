@@ -5,6 +5,14 @@ All notable changes to the **transformwithST** health assessment web application
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-11-14
+
+### Changed
+- **60-30-10 Warm Wellness Palette** (`index.html`, `src/index.css`, `src/App.tsx`, `src/config/appConfig.ts`): Bumped `APP_VERSION` to `1.1.1` and shifted from ice-mint/emerald to a warm ivory canvas (`#FAF7F2`), soft peach-blush top ambient glow (`#FDECE6`), crisp white cards (`border-stone-200/80`), deep muted sage primary anchor (`#265345`), and soft blush/terracotta accents (`#FDF2EE`, `#C96A50`, `#F3D5CA`).
+- **Readability for Indonesian Women Aged 20–60** (`src/App.tsx`, `src/components/FormStep.tsx`, `src/components/ContactGate.tsx`, `src/components/SummaryView.tsx`, `src/components/AnswerRecap.tsx`): Upgraded question option labels and inputs to `text-[15px]` (`font-medium`), raised helper/caption contrast to `text-stone-600`, and updated intro hero headline and Coach Vera quote card.
+- **Coach Brand & Form Polish** (`src/components/CoachAvatar.tsx`, `src/components/Header.tsx`, `src/components/FormStep.tsx`, `src/components/ContactGate.tsx`): Updated avatar ring to sage-to-terracotta gradient, kept header WhatsApp pill in recognizable WhatsApp emerald (`#059669`), styled Coach Vera Tip micro-bubble and selected choice cards with `#FDF2EE` / `#265345`, and refined `44px` numeric steppers and warm ivory sticky thumb bar.
+- **Editorial Summary Card & Dual Consultation CTAs** (`src/components/SummaryView.tsx`): Styled the summary hero card in deep muted sage (`#244C40`) with a champagne-to-blush SVG score ring, sage-to-terracotta sub-score bars, blush insight cards, recognizable WhatsApp emerald primary CTA, and warm blush/rose-terracotta Instagram DM CTA.
+
 ## [1.1.0] - 2026-11-14
 
 ### Added
